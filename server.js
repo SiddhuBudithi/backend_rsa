@@ -1,8 +1,8 @@
+// server.js (verify)
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-// import galleryRoutes from "./routes/gallery.routes.js";
 import contactRoute from "./routes/contact.routes.js";
 
 dotenv.config();
@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: ["https://rsassociates.online", "http://localhost:3000"],
+    origin: ["https://rsassociates.online", "https://www.rsassociates.online", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
