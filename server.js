@@ -23,20 +23,24 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("API is running"));
 
 // Routes
-// app.use("/api/gallery", galleryRoutes);
 app.use("/contact", contactRoute);
 
-// MongoDB connection
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
+// Start Express server immediately
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  connectDB(); // connect to mongo in background
+});
+
+// MongoDB connection (non-blocking)
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("MongoDB connected");
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => console.error("MongoDB connection error:", err));
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+  }
+}
 
 // 404 handler
 app.use((req, res) => {
